@@ -8,16 +8,36 @@ const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 console.log(dirname);
 
-app.use(express.stctic(path.join(dirname, 'public')));
+app.use(express.static(path.join(dirname, 'public')));
+app.use(express.urlencoded({ extended: true })); 
+app.use(express.json());
 
-app.use(express.static('public'));
+app.set('view engine', 'ejs');
+app.set('views', path.join(dirname, 'views'));
 
-app.get('/chat', (req, res) => {
-    res.send('welcome');
+const data = [];
+
+app.post('/join', (req, res) => {
+    const nickname = req.body.nickname;
+    data.push({
+        nickname: 'System',
+        message: 'Welcome' + nickname,
+        datetime: new Date()
+    });
+
+    res.render('chat', { nickname });
 });
 
-app.get('/', (req, res) => {
-    res.send('Welcome home');
+app.post('/send', (req,res) => {
+     const msg = req.body.messageContent;
+     const nickname = req.body.nickname;
+     console.log(msg, ', ', nickname);
+     data.push({
+        nickname: 'System',
+        message: msg,
+        datetime: new Date()
+    });
+     res.send('OK');
 });
 
 app.listen(3000, () => {
