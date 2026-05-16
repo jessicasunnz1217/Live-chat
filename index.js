@@ -21,7 +21,7 @@ app.post('/join', (req, res) => {
     const nickname = req.body.nickname;
     data.push({
         nickname: 'System',
-        message: 'Welcome' + nickname,
+        message: 'Welcome ' + nickname,
         datetime: new Date()
     });
 
@@ -33,11 +33,15 @@ app.post('/send', (req,res) => {
      const nickname = req.body.nickname;
      console.log(msg, ', ', nickname);
      data.push({
-        nickname: 'System',
+        nickname: nickname,
         message: msg,
         datetime: new Date()
     });
      res.send('OK');
+});
+
+app.get('/poll', (req,res) => {
+    res.status(200).json(data);
 });
 
 app.listen(3000, () => {

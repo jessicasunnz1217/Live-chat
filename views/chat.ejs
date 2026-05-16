@@ -8,9 +8,9 @@
 </head>
 <body>
      <div class="main">
-        <div class="chat-history"></div>
+        <div class="chat-history" id="chatHistory"></div>
         <div class="send-form">
-            <form action="" id="sendform">
+            <form action="" id="sendForm">
                 <input type="text" id="message">
                 <button type="submit">Send</button>
             </form>
@@ -19,11 +19,23 @@
      </div>
      <script>
         document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('sendform').addEventListener('submit', (e) => {
+            document.getElementById('sendForm').addEventListener('submit', (e) => {
                 e.preventDefault();
                 sendMessage();
-            })
-        })
+            });
+
+            poll();
+        });
+
+        async function poll() {
+            const response = await fetch('/poll');
+            const data = await response.json();
+            document.getElementById('chatHistory').innerHTML = data
+            .map(his => `<p>${his.nickname}: ${his.message}</p>`)
+            .join('');
+            setTimeout(poll, 1000);
+        }
+
       function sendMessage() {
             const message = document.getElementById ('message').value;
             fetch('/send', {
@@ -33,9 +45,10 @@
                 },
                 body: JSON.stringify({
                     messageContent: message,
-                    nickname: 'Norris'
+                    nickname: '<%= nickname %>'
                 })
             });
+            document.getElementById('message').value = '';
       }
 
      </script>
