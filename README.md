@@ -1,2 +1,12 @@
 # Live-chat
-A simple chat for us to chat in.
+    
+    # Tasks:
+
+
+
+    # How to save working:
+   git status
+   git add .
+   git status
+   push commit -m "__message"
+   git push

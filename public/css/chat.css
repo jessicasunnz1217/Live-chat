@@ -7,7 +7,10 @@
 .chat-history {
     width: 100%;
     height: 85vh;
-    background-color:rgb(128, 243, 249);
+    background-color:rgb(52, 132, 137);
+    padding: 10px;
+    color:rgb(83, 14, 14);
+    overflow-y: auto;
 }
 
 .send-form input {
@@ -18,4 +21,12 @@
 .send-form button {
     font-size: 2rem;
     min-width: 10%;
+}
+
+.myself-msg {
+    color:rgb(0, 0, 0)
+}
+
+.system-msg {
+    color:rgb(255, 255, 255)
 }
